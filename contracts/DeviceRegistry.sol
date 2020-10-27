@@ -15,12 +15,16 @@ contract DeviceRegistry is Ownable {
     bytes32 deviceHash = keccak256(abi.encodePacked(deviceId));
     deviceList[user][deviceHash] = true;
 
+    emit deviceAdded(user, deviceHash);
+
     return true;
   }
   
   function removeDevice(address user, string memory deviceId) public onlyOwner returns (bool) {
     bytes32 deviceHash = keccak256(abi.encodePacked(deviceId));
     deviceList[user][deviceHash] = false;
+
+    emit deviceRemoved(user, deviceHash);
 
     return true;
   }

@@ -8,6 +8,13 @@ contract DeviceRegistry is Ownable {
 
   mapping(address => mapping(bytes32 => bool)) private deviceList;
 
+  /**
+   * Through abi.encodePacked(), Solidity supports a non-standard packed mode
+   * where:
+   * - types shorter than 32 bytes are neither zero padded nor sign extended and
+   * - dynamic types are encoded in-place and without the length.
+   *
+   */
   function addDevice(address user, string memory deviceId) public onlyOwner returns (bool) {
     bytes32 deviceHash = keccak256(abi.encodePacked(deviceId));
     deviceList[user][deviceHash] = true;
